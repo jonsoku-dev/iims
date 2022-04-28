@@ -2,5 +2,10 @@
   "name": "iims",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@types/react": "^18.0.8",
+    "react": "^18.1.0",
+    "typescript": "^4.6.3"
+  }
 }
