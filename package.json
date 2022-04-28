@@ -1,5 +1,5 @@
 {
-  "name": "iims",
+  "name": "@jonsoku2/iims",
   "version": "1.0.0",
   "description": "A simple template for a custom React component library",
   "scripts": {
