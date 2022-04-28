@@ -23,5 +23,9 @@
   "files": [
     "dist"
   ],
-  "types": "dist/index.d.ts"
+  "private": false,
+  "types": "dist/index.d.ts",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/jonsoku2"
+  }
 }
