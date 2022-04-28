@@ -3,7 +3,8 @@
   "version": "1.0.4",
   "description": "A simple template for a custom React component library",
   "scripts": {
-    "rollup": "rollup -c"
+    "rollup": "rollup -c",
+    "test": "jest"
   },
   "author": "Jongseok Lee",
   "license": "ISC",
@@ -11,7 +12,10 @@
     "@rollup/plugin-commonjs": "^22.0.0",
     "@rollup/plugin-node-resolve": "^13.2.1",
     "@rollup/plugin-typescript": "^8.3.2",
+    "@testing-library/react": "^13.1.1",
+    "@types/jest": "^27.4.1",
     "@types/react": "^18.0.8",
+    "jest": "^28.0.2",
     "postcss": "^8.4.12",
     "rollup": "^2.70.2",
     "rollup-plugin-dts": "^4.2.1",
