@@ -64,12 +64,7 @@ jobs:
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
       - run:
           name: Publish package
-          command: |
-            if can-npm-publish; then
-                npm publish
-            else
-                echo "publish skipped"
-            fi
+          command: npm publish
 
 
 # Invoke jobs via workflows
