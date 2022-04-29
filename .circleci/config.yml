@@ -5,45 +5,54 @@ version: 2.1
 # docker 가상화 이미지를 설정할 수 있는데,
 # circleci에서 미리 빌드해놓은 제공된 이미지 목록에서 선택해야 한다.
 # 다음의 주소에서 선택할 수 있는 이미지를 확인할 수 있다. https://circleci.com/docs/2.0/circleci-images/
-defaults: &defaults
-  working_directory: ~/repo
-  docker:
-    - image: cimg/node:16.14.2
+executors:
+  default:
+    working_directory: ~/repo
+    docker:
+      - image: cimg/node:16.14.2
 
+commands:
+  npm_install:
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      - run: node --version
+      - run: yarn install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+  tool_install:
+    steps:
+      - run: sudo npm i -g can-npm-publish
 
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 # 빌드 작업을 수행한 job을 작성해 넣는다.
 jobs:
   build:
-    <<: *defaults
+    executor: default
     steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-      - run: node --version
-      - run: yarn
+      - tool_install
+      - npm_install
       - run: yarn rollup
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
       - persist_to_workspace:
           root: ~/repo
           paths: .
+
   test:
-    <<: *defaults
+    executor: default
     steps:
       - attach_workspace:
           at: ~/repo
-      - run: node --version
-      - run: yarn
+      - npm_install
       - run: yarn test
+
   deploy:
-    <<: *defaults
+    executor: default
     steps:
       - attach_workspace:
           at: ~/repo
@@ -55,7 +64,12 @@ jobs:
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
       - run:
           name: Publish package
-          command: npm publish
+          command: |
+            if can-npm-publish; then
+                npm publish
+            else
+                echo "publish skipped"
+            fi
 
 
 # Invoke jobs via workflows
