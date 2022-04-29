@@ -7,4 +7,5 @@ export const Wrapper = styled.button`
   border: none;
   background-color: transparent;
   cursor: pointer;
+  margin: ${(props) => props.theme.space}px;
 `
