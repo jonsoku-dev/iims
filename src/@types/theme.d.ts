@@ -1,7 +1,7 @@
 import '@emotion/react'
+import {IIMSTheme} from "../styles";
 
 declare module '@emotion/react' {
-    interface Theme {
-        space: number
+    interface Theme extends IIMSTheme{
     }
 }

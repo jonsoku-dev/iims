@@ -1,3 +1,3 @@
-export interface Theme {
+export interface IIMSTheme {
     space: number
 }
