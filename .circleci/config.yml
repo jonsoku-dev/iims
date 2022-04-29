@@ -25,9 +25,6 @@ commands:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-  tool_install:
-    steps:
-      - run: sudo yarn global add can-npm-publish
 
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
@@ -36,13 +33,11 @@ jobs:
   build:
     executor: default
     steps:
-      - tool_install
       - npm_install
       - run: yarn rollup
       - persist_to_workspace:
           root: ~/repo
           paths: .
-      - run: can-npm-publish
 
   test:
     executor: default
