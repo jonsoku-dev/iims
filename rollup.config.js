@@ -6,22 +6,35 @@ import dts from "rollup-plugin-dts";
 import postcss from "rollup-plugin-postcss";
 import { terser } from "rollup-plugin-terser";
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
+import * as path from 'path';
 
 const packageJson = require("./package.json");
+const moduleName = packageJson.name.replace(/^@.*\//, '');
+const inputFileName = 'src/index.ts';
+
+const banner = `
+  /**
+   * @license
+   * ${moduleName}.js v${packageJson.version}
+   * Released under the ${packageJson.license} License.
+   */
+`;
 
 export default [
     {
-        input: "src/index.ts",
+        input: inputFileName,
         output: [
             {
                 file: packageJson.main,
                 format: "cjs",
                 sourcemap: true,
+                banner
             },
             {
                 file: packageJson.module,
                 format: "esm",
                 sourcemap: true,
+                banner
             },
         ],
         plugins: [
@@ -29,11 +42,7 @@ export default [
             babel({
                 babelHelpers: 'bundled',
                 exclude: 'node_modules/**',
-                presets: [
-                    "@babel/preset-env",
-                    "@babel/preset-react",
-                    "@babel/preset-typescript",
-                ]
+                configFile: path.resolve(__dirname, 'babel.config.js'),
             }),
             resolve(),
             commonjs(),
@@ -41,7 +50,10 @@ export default [
             postcss(),
             terser(),
         ],
-        external: Object.keys(packageJson.peerDependencies)
+        external: [
+            ...Object.keys(packageJson.dependencies || {}),
+            ...Object.keys(packageJson.devDependencies || {}),
+        ],
     },
     {
         input: "dist/esm/types/index.d.ts",
