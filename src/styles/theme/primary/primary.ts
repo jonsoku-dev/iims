@@ -1,6 +1,6 @@
-import {Theme} from "../@types";
+import {IIMSTheme} from "../@types";
 
-const primary: Theme = {
+const primary: IIMSTheme = {
     space: 8
 } as const
 
