@@ -1,3 +1,5 @@
+const path = require('path')
+
 module.exports = {
   "typescript" : { reactDocgen: false },
   "stories": [
@@ -18,6 +20,10 @@ module.exports = {
   "webpackFinal": async (config, { configType }) => {
     // Fixes npm packages that depend on some modules
     config.resolve = {
+      ...config.resolve,
+      alias: {
+        "~": path.resolve(__dirname, "..", "src"),
+      },
       extensions: [".ts", ".tsx", ".js", ".css", ".scss"],
       fallback: {
         fs: false,

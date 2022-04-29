@@ -1,5 +1,5 @@
 import React from 'react';
-import {Wrapper} from "./Button.styled";
+import {Wrapper} from "~/components/Button/Button.styled";
 
 export interface ButtonProps {
     label: string

@@ -1,6 +1,6 @@
 import React from 'react'
 import {ThemeProvider as EmotionThemeProvider} from "@emotion/react";
-import primary from "../primary";
+import primary from "~/styles/theme/primary";
 
 interface IIMSThemeProviderProps {
     theme?: Record<string, any>
