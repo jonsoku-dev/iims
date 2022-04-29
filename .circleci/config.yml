@@ -64,6 +64,7 @@ jobs:
       - run:
           name: Publish package
           command: |
+            #!/usr/bin/env node
             if can-npm-publish; then
                 npm publish
             else
