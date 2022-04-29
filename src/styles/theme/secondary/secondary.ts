@@ -1,6 +1,4 @@
-import {IIMSTheme} from "../@types";
-
-const secondary: IIMSTheme = {
+const secondary = {
     space: 16
 } as const
 
