@@ -48,7 +48,6 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/repo
-      - npm_install
       - run: yarn test
 
   deploy:
